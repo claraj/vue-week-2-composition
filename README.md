@@ -8,4 +8,4 @@
 * styles
 * more computed properties
 
-Live versions here [https://claraj.github.io/vue-week-2-composition](https://claraj.github.io/vue-week-2-composition)
+Live version here [https://claraj.github.io/vue-week-2-composition](https://claraj.github.io/vue-week-2-composition)
