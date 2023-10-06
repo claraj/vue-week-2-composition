@@ -43,6 +43,7 @@
                         <th>Name</th>
                         <th>StarID</th>
                         <th>Present?</th>
+                        <th>Delete</th>
                     </tr>
 
                     <tr v-for="student in sortedStudents" v-bind:key="student.starID" v-bind:class="{ present: student.present, absent: !student.present }">
@@ -52,6 +53,9 @@
                             <input type="checkbox" v-model="student.present" v-on:change="arrivedOrLeft(student)">
                             <span class="mx-3" v-if="student.present">Here!</span>
                             <span class="mx-3" v-else>Not present</span>
+                        </td>
+                        <td>
+                            <img src="delete.png" v-on:click="deleteStudent(student)" v-bind:alt="deleteAltText(student)">
                         </td>
                     </tr>
                 </table>
@@ -113,6 +117,18 @@
                 mostRecentStudent.value = student
             }
 
+            const deleteStudent = (studentToDelete) => {
+                if (confirm(`Delete ${studentToDelete.name}?`)) {
+                    // remove student from studentList 
+                    studentList.value = studentList.value.filter( (student) => {
+                        return studentToDelete != student
+                    })
+                }
+            }
+
+            const deleteAltText = (student) => {
+                return `Delete ${student.name}?`
+            } 
 
             const sortedStudents = computed( () => {
                  // Sort student array in name order, regardless of case
@@ -134,7 +150,6 @@
             })
 
             return {
-
                 // Data 
                 newStudentName, 
                 newStarID, 
@@ -147,7 +162,9 @@
 
                 // functions 
                 addStudent,
-                arrivedOrLeft
+                arrivedOrLeft,
+                deleteStudent,
+                deleteAltText
             }  
 
         }
