@@ -1,11 +1,13 @@
 #student-table {
-    max-height: 400px;
+    max-height: 500px;
     overflow: scroll;
 }
 
-th, tr {
-    width: 33%;
+th, td {
+    width: 25%;
+    text-align: center;
 }
+
 
 .present {
     color: gray;
