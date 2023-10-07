@@ -5,6 +5,7 @@
     <title>Student Sign In</title>
     <script src="https://unpkg.com/vue@next"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="styles.css" type="text/css">
 </head>
 
@@ -39,25 +40,31 @@
             <h4 class="card-title">Student List</h4>
             <div id="student-table">
                 <table class="table">
-                    <tr>
-                        <th>Name</th>
-                        <th>StarID</th>
-                        <th>Present?</th>
-                        <th>Delete</th>
-                    </tr>
+                    <thead>
+                        <tr class="align-middle">
+                            <th>Name</th>
+                            <th>StarID</th>
+                            <th>Present?</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
 
-                    <tr v-for="student in sortedStudents" v-bind:key="student.starID" v-bind:class="{ present: student.present, absent: !student.present }">
-                        <td>{{ student.name }}</td>
-                        <td>{{ student.starID }}</td>
-                        <td> 
-                            <input type="checkbox" v-model="student.present" v-on:change="arrivedOrLeft(student)">
-                            <span class="mx-3" v-if="student.present">Here!</span>
-                            <span class="mx-3" v-else>Not present</span>
-                        </td>
-                        <td>
-                            <img src="delete.png" v-on:click="deleteStudent(student)" v-bind:alt="deleteAltText(student)">
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr v-for="student in sortedStudents" v-bind:key="student.starID" class="align-middle" v-bind:class="{ present: student.present, absent: !student.present }">
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.starID }}</td>
+                            <td> 
+                                <input type="checkbox" v-model="student.present" v-on:change="arrivedOrLeft(student)">
+                                <span class="mx-3" v-if="student.present">Here!</span>
+                                <span class="mx-3" v-else>Not present</span>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger" v-on:click="deleteStudent(student)">
+                                    <i class="bi bi-trash-fill"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -126,28 +133,25 @@
                 }
             }
 
-            const deleteAltText = (student) => {
-                return `Delete ${student.name}?`
-            } 
-
             const sortedStudents = computed( () => {
                  // Sort student array in name order, regardless of case
-                 return studentList.value.toSorted( (s1, s2) => {
+                return studentList.value.toSorted( (s1, s2) => {
                         // return positive number if s1 should be sorted after s2
-                        if (s1.name.toUpperCase() > s2.name.toUpperCase()) {
-                            return 1
-                        }
+                    if (s1.name.toUpperCase() > s2.name.toUpperCase()) {
+                        return 1
+                    }
 
-                        // return negative number if s1 should be sorted before s2
-                        if (s1.name.toUpperCase() < s2.name.toUpperCase()) {
-                            return -1
-                        }
+                    // return negative number if s1 should be sorted before s2
+                    if (s1.name.toUpperCase() < s2.name.toUpperCase()) {
+                        return -1
+                    }
 
-                        // return 0 if order is equivalent, names are the same
-                        // optional - if names are the same, sort by starId
-                        return 0
-                    })
+                    // return 0 if order is equivalent, names are the same
+                    // optional - if names are the same, sort by starId
+                    return 0
+                })
             })
+
 
             return {
                 // Data 
@@ -164,7 +168,6 @@
                 addStudent,
                 arrivedOrLeft,
                 deleteStudent,
-                deleteAltText
             }  
 
         }
