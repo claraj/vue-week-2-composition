@@ -1,9 +1,10 @@
 # Week 2 Vue.js examples 
 
+## Student Sign In
+
 * v-for 
+* v-model
 * forms - checkboxes
-* forms - select 
-* forms - radio buttons
 * validation
 * styles
 * more computed properties
